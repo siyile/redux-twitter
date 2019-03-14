@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Nav from './Nav'
 import Home from './Home'
 import LoadingBar from 'react-redux-loading-bar';
+import ComposeTweet from './ComposeTweet';
+import TweetPage from './TweetPage';
 
 class App extends Component {
   componentDidMount(){
@@ -22,7 +24,8 @@ class App extends Component {
             ? null
             : <div>
                 <Route path="/" exact component={Home} />
-                <Route path="/new" />
+                <Route path="/new" component={ComposeTweet} />
+                <Route path="/tweet/:id" component={TweetPage} />
               </div>
             }
         </Fragment>

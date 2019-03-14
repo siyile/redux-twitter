@@ -1,7 +1,9 @@
-import { saveLikeToggle } from "../utils/api";
+import { saveLikeToggle, saveTweet } from "../utils/api";
+import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 export const RECEIVE_TWEETS = 'RECEIVE_TWEETS'
 export const LIKE_TOGGLE_TWEET = 'LIKE_TOGGLE_TWEET'
+export const COMPOSE_TWEET = 'COMPOSE_TWEET'
 
 export function receiveTweets(tweets){
   return {
@@ -19,6 +21,14 @@ export function likeToggleTweet( { authedUser, id, hasLiked }){
   }
 }
 
+export function composeTweet({ tweet, replyingTo }){
+  return {
+    type: COMPOSE_TWEET,
+    tweet,
+    replyingTo
+  }
+}
+
 export function handleToggleLikeTweet({ authedUser, id, hasLiked }){
   return dispatch => {
     dispatch(likeToggleTweet( { authedUser, id, hasLiked }))
@@ -26,6 +36,17 @@ export function handleToggleLikeTweet({ authedUser, id, hasLiked }){
       .catch(() => {
         hasLiked = !hasLiked
         dispatch(likeToggleTweet( { authedUser, id, hasLiked }))
+      })
+  }
+}
+
+export function  handleComposeTweet({ authedUser, text, replyingTo }){
+  return dispatch => {
+    dispatch(showLoading())
+    return saveTweet({ author: authedUser, text, replyingTo })
+      .then((tweet) => {
+        dispatch(composeTweet({ tweet, replyingTo }))
+        dispatch(hideLoading())
       })
   }
 }

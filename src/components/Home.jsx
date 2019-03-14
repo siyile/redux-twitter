@@ -7,8 +7,8 @@ export class Home extends Component {
   render() {
     const { tweetsList } = this.props
     return (
-      <div>
-        <h1>Your time line</h1>
+      <div className="container">
+        <h1 className="text-center">Your time line</h1>
           <ul>
             {tweetsList.map(tweet => (
             <li key={tweet.id} className="tweet">

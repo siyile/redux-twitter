@@ -1,4 +1,4 @@
-import { RECEIVE_TWEETS, LIKE_TOGGLE_TWEET } from "../actions/tweets";
+import { RECEIVE_TWEETS, LIKE_TOGGLE_TWEET, COMPOSE_TWEET } from "../actions/tweets";
 
 export default function tweets(state = {}, action){
   switch(action.type){
@@ -27,6 +27,25 @@ export default function tweets(state = {}, action){
             likes: tweet.likes.concat(authedUser)
           }
         }
+    }
+
+    case COMPOSE_TWEET:{
+      const { tweet, replyingTo } = action;
+      if (replyingTo){
+        return {
+          ...state,
+          [tweet.id]: tweet,
+          [replyingTo]: {
+            ...state[replyingTo],
+            replies: state[replyingTo].replies.concat(tweet.id)
+          }
+        }
+      } else {
+        return {
+          ...state,
+          [tweet.id]: tweet
+        }
+      }
     }
 
     default:

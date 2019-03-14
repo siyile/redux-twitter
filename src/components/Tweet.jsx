@@ -59,9 +59,9 @@ export class Tweet extends Component {
   }
 }
 
-const mapStateToProps = ({ tweets, users, authedUser }) => ({
-  tweets, users, authedUser,
-})
+const mapStateToProps = ({ tweets, users, authedUser }) => {
+  return {tweets, users, authedUser}
+}
 
 export default connect(mapStateToProps)(Tweet)
 
